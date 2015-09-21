@@ -34,7 +34,7 @@
       <groupId>io.wcm</groupId>
       <artifactId>io.wcm.samples.complete</artifactId>
       <version>${wcm.io.sample-version}</version>
-      <type>pom</type>
+      <type>zip</type>
       <!--
       <type>content-package</type>
       -->
