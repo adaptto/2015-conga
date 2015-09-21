@@ -1,0 +1,118 @@
+# Example Test Environment
+
+nodes:
+
+# author
+
+- node: aem-author
+  roles:
+  - role: aem-cms
+    variant: aem-author
+  - role: wcm-io-samples-aem-cms
+    variant: aem-author
+  config:
+    replication.author.publishTargets:
+    - name: publish1
+      url: http://localhost:4503
+      transportUser: admin
+      tranportPassword: "{443a90a7ed2bf085c7a4a5947013b32bf617b87025bbca44786ac2b926a59f6c}"
+    - name: publish2
+      url: http://localhost:4503
+      transportUser: admin
+      tranportPassword: "{443a90a7ed2bf085c7a4a5947013b32bf617b87025bbca44786ac2b926a59f6c}"
+    - name: publish3
+      url: http://localhost:4503
+      transportUser: admin
+      tranportPassword: "{443a90a7ed2bf085c7a4a5947013b32bf617b87025bbca44786ac2b926a59f6c}"
+
+
+# publishers
+
+- nodes:
+  - aem-publish1
+  - aem-publish2
+  - aem-publish3
+  roles:
+  - role: aem-cms
+    variant: aem-publish
+  - role: wcm-io-samples-aem-cms
+    variant: aem-publish
+  config:
+    replication.publish.flushTarget:
+      name: dispatcher  # TODO: how to use multiple dispatchers?
+      url: http://localhost
+
+
+# webservers & dispatcher
+
+- nodes:
+  - webserver-author
+  roles:
+  - role: aem-dispatcher-common
+  - role: aem-dispatcher-author
+    variant: ssl
+    config:
+      cmsAuthorHostname: author.sample.com
+      dispatcher:
+        cacheRootPath: /var/cache/author
+        renderInstance:
+          host: localhost
+          port: 4502
+        allowAdminAccessFrom: 10.0.0.0/255.0.0.0
+
+- nodes:
+  - webserver-publish1
+  - webserver-publish2
+  - webserver-publish3
+  roles:
+  - role: aem-dispatcher-common
+  - role: aem-dispatcher-publish
+    variant: no-ssl+ssl
+    config:
+      dispatcher:
+        cacheRootPath: /var/cache/publish
+        statFilesLevel: 3
+        renderInstance:
+          host: localhost
+          port: 4503
+        allowAdminAccessFrom: 10.0.0.0/255.0.0.0
+
+config:
+  jvm.path: "/usr/lib/jvm/jdk-8-oracle-x64"
+  dispatcher:
+    moduleFile: /usr/lib/apache2/modules/mod_dispatcher.so
+    allowFlushFrom: 127.0.0.1 localhost
+    sslCertificateFile: /etc/ssl/certs/sample.crt
+    sslCertificateKeyFile: /etc/ssl/private/sample.key
+    sslCACertificatePath: /etc/ssl/certs
+    sslCACertificateFile: /etc/ssl/certs/sample.pem
+  workflow:
+    useMinimalDamUpdateAssetWorkflow: true
+  contentPackage.group: "wcm-io-samples"
+
+
+tenants:
+
+- tenant: sample1.com
+  config:
+    serverAliasNames:
+    - www.sample1.com
+    slingMappingPath: /content/sample1
+    dispatcher:
+      rootRedirectUrl: /en.html
+
+- tenant: sample2.com
+  config:
+    serverAliasNames:
+    - www.sample2.com
+    slingMappingPath: /content/sample2
+    dispatcher:
+      rootRedirectUrl: /en.html
+
+- tenant: sample3.com
+  config:
+    serverAliasNames:
+    - www.sample3.com
+    slingMappingPath: /content/sample3
+    dispatcher:
+      rootRedirectUrl: /fr.html
