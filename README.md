@@ -28,4 +28,4 @@ To build the configuration clone the [current repository](https://github.com/ada
 mvn clean package
 ```
 
-You will find the generated confgiuration at `target/configuration`.
+You will find the generated configuration at `target/configuration`.
