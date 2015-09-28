@@ -13,18 +13,17 @@ nodes:
   config:
     replication.author.publishTargets:
     - name: publish1
-      url: http://localhost:4503
+      url: http://aem-publish1:4503
       transportUser: admin
-      tranportPassword: "{443a90a7ed2bf085c7a4a5947013b32bf617b87025bbca44786ac2b926a59f6c}"
+      transportPassword: "{443a90a7ed2bf085c7a4a5947013b32bf617b87025bbca44786ac2b926a59f6c}"
     - name: publish2
-      url: http://localhost:4503
+      url: http://aem-publish2:4503
       transportUser: admin
-      tranportPassword: "{443a90a7ed2bf085c7a4a5947013b32bf617b87025bbca44786ac2b926a59f6c}"
+      transportPassword: "{443a90a7ed2bf085c7a4a5947013b32bf617b87025bbca44786ac2b926a59f6c}"
     - name: publish3
-      url: http://localhost:4503
+      url: http://aem-publish3:4503
       transportUser: admin
-      tranportPassword: "{443a90a7ed2bf085c7a4a5947013b32bf617b87025bbca44786ac2b926a59f6c}"
-
+      transportPassword: "{443a90a7ed2bf085c7a4a5947013b32bf617b87025bbca44786ac2b926a59f6c}"
 
 # publishers
 
@@ -39,9 +38,8 @@ nodes:
     variant: aem-publish
   config:
     replication.publish.flushTarget:
-      name: dispatcher  # TODO: how to use multiple dispatchers?
+      name: dispatcher
       url: http://localhost
-
 
 # webservers & dispatcher
 
