@@ -16,7 +16,6 @@
   <version>1.0.0-SNAPSHOT</version>
   <packaging>config</packaging>
 
-
   <properties>
     <wcm.io.sample-version>1.0.0-SNAPSHOT</wcm.io.sample-version>
   </properties>
@@ -35,12 +34,9 @@
       <artifactId>io.wcm.samples.complete</artifactId>
       <version>${wcm.io.sample-version}</version>
       <type>zip</type>
-      <!--
-      <type>content-package</type>
-      -->
       <scope>test</scope>
     </dependency>
-    
+
   </dependencies>
 
   <build>
@@ -85,7 +81,7 @@
           </execution>
         </executions>
       </plugin>
-      
+
     </plugins>
   </build>
 
